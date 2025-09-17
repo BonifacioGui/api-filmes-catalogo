@@ -1,5 +1,3 @@
-// server.js (código completo atualizado)
-
 const express = require('express');
 const cors = require('cors');
 
@@ -7,7 +5,7 @@ const app = express();
 const port = 8080;
 
 app.use(cors());
-app.use(express.json()); // Essencial para a rota POST entender JSON
+app.use(express.json()); 
 
 // "Banco de dados" em memória
 let filmes = [
@@ -16,31 +14,27 @@ let filmes = [
     { id: 3, titulo: "A Origem", ano: 2010, genero: "Ação, Aventura, Sci-Fi" }
 ];
 
-// NOVO: Variável para controlar o próximo ID a ser gerado
 let proximoId = 4;
 
 // --- ROTAS DA API ---
 
-// Rota GET para obter todos os filmes (já existente)
+// Rota GET para obter todos os filmes 
 app.get('/api/filmes', (req, res) => {
     res.json(filmes);
 });
 
-// NOVO: Feature 2 - Rota POST para adicionar um novo filme
+//Feature 2 - Rota POST para adicionar um novo filme
 app.post('/api/filmes', (req, res) => {
-    // 1. Pega os dados enviados no corpo da requisição
+    
     const novoFilme = req.body;
 
-    // 2. Validação simples para garantir que os dados necessários foram enviados
     if (!novoFilme.titulo || !novoFilme.ano || !novoFilme.genero) {
         return res.status(400).json({ mensagem: "Dados incompletos. Título, ano e gênero são obrigatórios." });
     }
 
-    // 3. Adiciona um ID único ao novo filme e o adiciona ao array
     novoFilme.id = proximoId++;
     filmes.push(novoFilme);
 
-    // 4. Retorna o filme que foi criado com o status 201 (Created)
     res.status(201).json(novoFilme);
 });
 
