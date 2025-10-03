@@ -56,7 +56,7 @@ Uma API REST simples para gerenciar uma lista de filmes.
 
 ## Workflow de Desenvolvimento (Git)
 
-Para este projeto, foi utilizado o **Feature Branch Workflow**.
+Para este projeto, foi utilizado o **GitHub Flow**.
 
 ### Por que essa escolha?
 
