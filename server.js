@@ -6,6 +6,8 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json()); 
+app.use(express.static('public')); 
+
 
 // "Banco de dados" em memória
 let filmes = [

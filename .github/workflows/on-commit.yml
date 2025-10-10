@@ -8,7 +8,7 @@ on:
   push:
     branches: [ main ] # Executa apenas em commits na branch 'main'
 
-# Define os "trabalhos" (jobs) a serem executados
+# Define os "trabalhos" a serem executados
 jobs:
   build-and-test:
     # Define o ambiente virtual onde o trabalho será executado
@@ -17,7 +17,6 @@ jobs:
     # Define a sequência de passos
     steps:
       # Passo 1: Clonar o repositório
-      # A action 'checkout' clona seu repositório e troca para o commit/branch correto
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -25,10 +24,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Você pode especificar a versão do Node
+          node-version: '22.17'
 
       # Passo 3: Instalar as dependências do projeto
-      # 'npm ci' é mais rápido e seguro para ambientes de CI do que 'npm install'
       - name: Install dependencies
         run: npm ci
 

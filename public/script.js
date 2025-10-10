@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listener para o clique no botão
     themeToggle.addEventListener('change', function() {
         if (this.checked) {
-            document.body.classList.remove('light-mode'); // Remove o modo claro se houver
+            document.body.classList.remove('light-mode'); 
             document.body.classList.add('dark-mode');
             localStorage.setItem('theme', 'dark-mode');
         } else {
             document.body.classList.remove('dark-mode');
-            document.body.classList.add('light-mode'); // Adiciona modo claro explicitamente
+            document.body.classList.add('light-mode'); 
             localStorage.setItem('theme', 'light-mode');
         }
     })
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const filmes = await response.json();
 
-            listaFilmes.innerHTML = ''; // Limpa a lista antes de adicionar os itens
+            listaFilmes.innerHTML = ''; 
             filmes.forEach(filme => {
                 const item = document.createElement('li');
                 item.innerHTML = `
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para adicionar um novo filme
     async function adicionarFilme(event) {
-        event.preventDefault(); // Impede o recarregamento da página
+        event.preventDefault(); 
 
         const titulo = document.getElementById('titulo').value;
         const ano = document.getElementById('ano').value;
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const novoFilme = {
             titulo: titulo,
-            ano: parseInt(ano), // Garante que o ano seja um número
+            ano: parseInt(ano), 
             genero: genero
         };
 
@@ -89,9 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Adiciona o listener para o evento de submit do formulário
     form.addEventListener('submit', adicionarFilme);
 
-    // Carrega os filmes ao iniciar a página
     carregarFilmes();
 });

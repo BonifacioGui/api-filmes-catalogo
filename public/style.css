@@ -121,7 +121,24 @@
   input:checked + .slider { background-color: var(--primary-color); }
   .dark-mode input:checked + .slider:before { background-color: var(--surface-ground); }
   input:checked + .slider:before { transform: translateX(22px); }
-  
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: var(--text-muted, var(--text-color));
+  }
+
+  footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
   /* --- Componentes com Tema Aplicado --- */
   form { display: grid; gap: 1rem; }
 
