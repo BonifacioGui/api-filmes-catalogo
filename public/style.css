@@ -1,0 +1,174 @@
+/*
+  STYLE.CSS NÍVEL ESPECIALISTA (Setembro de 2025)
+  ------------------------------------------------
+  Demonstração de um sistema de tema sofisticado.
+*/
+
+@layer defaults, layout, components, theme;
+
+@layer theme {
+  /* TEMA CLARO (Padrão - Mantido como antes) */
+  :root {
+    --hue-primary: 210;
+    --hue-text: 210;
+    --surface-1: oklch(0.98 0.01 var(--hue-primary));
+    --surface-2: oklch(1 0 0);
+    --surface-item: oklch(0.95 0.01 var(--hue-primary));
+    --text-color: oklch(0.25 0.05 var(--hue-text));
+    --primary-color: oklch(0.5 0.15 var(--hue-primary));
+    --primary-color-hover: oklch(0.45 0.15 var(--hue-primary));
+    --border-color: oklch(0.9 0.01 var(--hue-primary));
+    --shadow-color: oklch(0 0 0 / 0.1);
+  }
+
+  /* ✨ TEMA ESCURO "PRETO & DOURADO" (Nível Especialista) */
+  .dark-mode {
+    /* -- HUE DEFINITIONS -- */
+    --hue-brand: 90; /* Matiz do Dourado */
+    --hue-neutral: 240; /* Matiz sutil para os fundos escuros */
+
+    /* -- BRAND & ACCENT COLORS -- */
+    --brand-accent: oklch(0.75 0.15 var(--hue-brand));
+    --brand-accent-hover: oklch(0.8 0.16 var(--hue-brand));
+    --brand-glow-color: oklch(from var(--brand-accent) l c h / 0.5);
+
+    /* -- TEXT COLORS -- */
+    --text-base: oklch(0.95 0.01 var(--hue-neutral)); /* Quase branco, suave */
+    --text-muted: oklch(0.65 0.02 var(--hue-neutral)); /* Para texto secundário */
+
+    /* -- SURFACE & BORDER COLORS -- */
+    --surface-ground: oklch(0.12 0.01 var(--hue-neutral)); /* O "preto" principal */
+    --surface-raised: oklch(0.18 0.02 var(--hue-neutral)); /* Para cards e containers */
+    --surface-interactive: oklch(0.22 0.02 var(--hue-neutral)); /* Para itens de lista */
+    --border-subtle: oklch(0.3 0.02 var(--hue-neutral));
+    --border-interactive: oklch(0.5 0.05 var(--hue-brand));
+    
+    /* -- SHADOWS -- */
+    --shadow-color: oklch(0 0 0 / 0.4);
+
+    /* Renomeando variáveis para refletir o novo sistema */
+    --surface-1: var(--surface-ground);
+    --surface-2: var(--surface-raised);
+    --surface-item: var(--surface-interactive);
+    --text-color: var(--text-base);
+    --primary-color: var(--brand-accent);
+    --primary-color-hover: var(--brand-accent-hover);
+    --border-color: var(--border-subtle);
+  }
+}
+
+@layer defaults {
+  :root {
+    --font-size-base: clamp(1rem, 1rem + 0.2vw, 1.125rem);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--surface-1);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem;
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2 {
+    text-align: center;
+    color: var(--primary-color);
+    text-wrap: balance;
+    /* ✨ Efeito de Brilho Sutil no Dourado */
+    text-shadow: 0 0 8px var(--brand-glow-color, transparent);
+    transition: color 0.3s ease;
+  }
+}
+
+@layer layout {
+  .container {
+    width: min(100%, 800px);
+    margin-inline: auto;
+    background: var(--surface-2);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    /* ✨ Sombra mais realista e em camadas */
+    box-shadow: 0 1px 2px var(--shadow-color, oklch(0 0 0 / 0.2)), 
+                0 10px 30px var(--shadow-color, oklch(0 0 0 / 0.2));
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  .form-container, .filmes-container { margin-bottom: 2rem; }
+  .filmes-container { container-type: inline-size; }
+}
+
+@layer components {
+  /* --- Estilos do Seletor de Tema --- */
+  .theme-switcher-wrapper { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+  .theme-switcher { position: relative; display: inline-block; width: 50px; height: 28px; }
+  .theme-switcher input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; cursor: pointer; inset: 0;
+    background-color: var(--surface-item);
+    border-radius: 28px;
+    transition: background-color 0.3s;
+  }
+  .slider:before {
+    position: absolute; content: ""; height: 20px; width: 20px;
+    left: 4px; bottom: 4px;
+    background-color: var(--text-muted, #ccc);
+    border-radius: 50%;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  input:checked + .slider { background-color: var(--primary-color); }
+  .dark-mode input:checked + .slider:before { background-color: var(--surface-ground); }
+  input:checked + .slider:before { transform: translateX(22px); }
+  
+  /* --- Componentes com Tema Aplicado --- */
+  form { display: grid; gap: 1rem; }
+
+  input[type="text"], input[type="number"] {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: var(--surface-1);
+    color: var(--text-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  input[type="text"]:focus-visible, input[type="number"]:focus-visible {
+    border-color: var(--border-interactive, var(--primary-color));
+    box-shadow: 0 0 0 3px var(--brand-glow-color, oklch(from var(--primary-color) l h c / 0.3));
+  }
+  
+  button {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer; font-size: 1.05em; font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  button:hover, button:focus-visible {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--surface-ground, white); /* Cor do texto que contrasta com o fundo do botão */
+    transform: translateY(-2px);
+  }
+
+  #lista-filmes { list-style: none; padding: 0; display: grid; gap: 1rem; }
+
+  #lista-filmes li {
+    background: var(--surface-item);
+    padding: 1.25rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  #lista-filmes li:hover {
+    transform: scale(1.02);
+  }
+}
