@@ -1,28 +1,39 @@
 # .github/workflows/on-pull-request.yml
-
-# Nome do fluxo de trabalho
 name: CI on Pull Request
 
-# Define o gatilho
 on:
   pull_request:
-    branches: [ main ] 
+    branches: [ main ]
 
 jobs:
-  build-and-test:
+  # Job 1: Verificação Estática (Linter) [cite: 192, 194]
+  lint:
+    name: Lint (Static Analysis)
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.17'
-
+          node-version: '20'
       - name: Install dependencies
         run: npm ci
+      - name: Run ESLint
+        run: npm run lint
 
-      - name: Run tests
+  # Job 2: Testes (Unidade, Integração e Cobertura) [cite: 196, 213, 214]
+  test:
+    name: Test and Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests with coverage
         run: npm test
