@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    const apiUrl = 'http://localhost:8080/api/filmes';
+    const apiUrl = 'http://localhost:8080/filmes';
     const listaFilmes = document.getElementById('lista-filmes');
     const form = document.getElementById('form-add-filme');
 
