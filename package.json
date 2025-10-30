@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
-
+    "test": "jest --coverage",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,8 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "jest": "^30.2.0"
+    "eslint": "^8.57.1",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
   }
 }
