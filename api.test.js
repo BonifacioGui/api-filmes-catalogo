@@ -1,24 +1,45 @@
-// api.test.js
+const request = require('supertest');
+const app = require('./server');
 
-// Mock da nossa API. Não precisamos iniciar o servidor de verdade para testar a lógica.
-const filmes = [
-    { id: 1, titulo: "O Poderoso Chefão", ano: 1972, genero: "Crime, Drama" },
-    { id: 2, titulo: "Interestelar", ano: 2014, genero: "Aventura, Drama, Sci-Fi" },
-    { id: 3, titulo: "A Origem", ano: 2010, genero: "Ação, Aventura, Sci-Fi" }
-];
+describe('API de Filmes - Testes de Integração', () => {
 
-// Teste de exemplo
-describe('API de Filmes', () => {
-    
-    test('Rota GET /api/filmes deve retornar uma lista de filmes', () => {
-        // Simula a obtenção dos filmes
-        const resultado = filmes;
-
-        // Verifica se o resultado é um array
-        expect(Array.isArray(resultado)).toBe(true);
-
-        // Verifica se a lista não está vazia
-        expect(resultado.length).toBeGreaterThan(0);
+    // Teste GET
+    it('GET /filmes - Deve retornar a lista de filmes', async () => {
+        const response = await request(app).get('/filmes');
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
     });
 
+    // Teste POST (Sucesso)
+    it('POST /filmes - Deve criar um novo filme com sucesso', async () => {
+        const novoFilme = { titulo: "Matrix", ano: 1999, genero: "Sci-Fi, Ação" };
+        const response = await request(app).post('/filmes').send(novoFilme);
+        expect(response.statusCode).toBe(201);
+        expect(response.body.titulo).toBe("Matrix");
+    });
+
+    // Teste POST (Falha 400) - PARA GARANTIR >90% DE COBERTURA
+    it('POST /filmes - Deve retornar 400 se os dados estiverem incompletos', async () => {
+        const filmeIncompleto = { titulo: "Filme Sem Ano" };
+        const response = await request(app).post('/filmes').send(filmeIncompleto);
+        expect(response.statusCode).toBe(400);
+    });
+
+    // Teste DELETE (Sucesso 204)
+    it('DELETE /filmes/:id - Deve deletar um filme existente e retornar 204', async () => {
+        // Adiciona um filme só para ter certeza que ele existe antes de deletar
+        const novoFilme = { titulo: "Para Deletar", ano: 2000, genero: "Teste" };
+        const postRes = await request(app).post('/filmes').send(novoFilme);
+        const idParaDeletar = postRes.body.id;
+
+        const response = await request(app).delete(`/filmes/${idParaDeletar}`);
+        expect(response.statusCode).toBe(204);
+    });
+
+    // Teste DELETE (Falha 404)
+    it('DELETE /filmes/:id - Deve retornar 404 se o filme não existir', async () => {
+        const idQueNaoExiste = 999;
+        const response = await request(app).delete(`/filmes/${idQueNaoExiste}`);
+        expect(response.statusCode).toBe(404);
+    });
 });
