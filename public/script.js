@@ -1,9 +1,8 @@
-    // --- INÍCIO: LÓGICA DO TEMA ESCURO ---
+// --- INÍCIO: LÓGICA DO TEMA ESCURO ---
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme');
 
-    // Aplica o tema salvo ao carregar a página
     if (currentTheme) {
         document.body.classList.add(currentTheme);
         if (currentTheme === 'dark-mode') {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Listener para o clique no botão
     themeToggle.addEventListener('change', function() {
         if (this.checked) {
             document.body.classList.remove('light-mode'); 
@@ -22,9 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('light-mode'); 
             localStorage.setItem('theme', 'light-mode');
         }
-    })
+    });
 
-    const apiUrl = 'http://localhost:8080/api/filmes';
+    // --- FIM: LÓGICA DO TEMA ESCURO ---
+
+
+    // ATUALIZADO: Rota correta /filmes
+    const apiUrl = '/filmes'; 
     const listaFilmes = document.getElementById('lista-filmes');
     const form = document.getElementById('form-add-filme');
 
@@ -78,8 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error('Erro ao adicionar filme');
             }
-
-            // Limpa o formulário e recarrega a lista
             form.reset();
             carregarFilmes();
 
