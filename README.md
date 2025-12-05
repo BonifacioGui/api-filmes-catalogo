@@ -82,3 +82,11 @@ A branch `main` é protegida com as seguintes regras:
 * É obrigatório o uso de Pull Requests.
 * É obrigatório que os checks de status **`lint`** e **`test`** passem com sucesso.
 * A cobertura de testes deve se manter acima de **90%**.
+
+## 🐳 Docker Hub
+
+A imagem oficial da aplicação está disponível publicamente.
+
+[![Docker Image Version](https://img.shields.io/docker/v/SEU_USUARIO/api-filmes?sort=semver&label=DockerHub)](https://hub.docker.com/r/guilhermeboni/api-filmes)
+
+* **Link:** [hub.docker.com/r/SEU_USUARIO/api-filmes](https://hub.docker.com/r/guilhermeboni/api-filmes)
