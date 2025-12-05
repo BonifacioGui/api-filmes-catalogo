@@ -1,0 +1,41 @@
+---
+- name: Instalar e executar API de Filmes via Docker
+  hosts: all
+  become: yes
+  vars:
+    # Sua imagem oficial no DockerHub
+    docker_image: "guilhermeboni/api-filmes:latest"
+    container_name: "api-filmes-container"
+
+  tasks:
+    - name: Atualizar cache do apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar dependências essenciais
+      apt:
+        name: ['ca-certificates', 'curl', 'gnupg', 'python3-pip', 'docker.io']
+        state: present
+
+    - name: Garantir que o serviço Docker está rodando
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Baixar (pull) a imagem mais recente do DockerHub
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: yes
+
+    - name: Executar container da API na porta 8080
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "8080:8080"
+        # Remove container antigo se existir, para atualizar
+        recreate: yes
