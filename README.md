@@ -87,6 +87,6 @@ A branch `main` é protegida com as seguintes regras:
 
 A imagem oficial da aplicação está disponível publicamente.
 
-[![Docker Image Version](https://img.shields.io/docker/v/SEU_USUARIO/api-filmes?sort=semver&label=DockerHub)](https://hub.docker.com/r/guilhermeboni/api-filmes)
+[![Docker Image Version](https://img.shields.io/docker/v/guilhermeboni/api-filmes?sort=semver&label=DockerHub)](https://hub.docker.com/r/guilhermeboni/api-filmes)
 
-* **Link:** [hub.docker.com/r/SEU_USUARIO/api-filmes](https://hub.docker.com/r/guilhermeboni/api-filmes)
+* **Link:** [hub.docker.com/r/guilhermeboni/api-filmes](https://hub.docker.com/r/guilhermeboni/api-filmes)
