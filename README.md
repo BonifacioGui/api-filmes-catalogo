@@ -2,7 +2,7 @@
 
 Uma API REST simples para gerenciar uma lista de filmes, desenvolvida para a disciplina de Gestão de Configuração.
 
-Este projeto inclui uma API Node.js/Express, um frontend de consumo e um pipeline de CI/CD completo com GitHub Actions focado em qualidade de código.
+Este projeto inclui uma API Node.js/Express, um frontend de consumo e um pipeline de CI/CD completo com GitHub Actions focado em qualidade de código e DevOps.
 
 ## Como Executar
 
@@ -58,11 +58,16 @@ Este projeto inclui uma API Node.js/Express, um frontend de consumo e um pipelin
 
 ## Workflow de Gestão de Configuração e Qualidade
 
-Este projeto segue um fluxo de trabalho profissional focado em garantir a qualidade e a integridade do código.
+Este projeto segue um fluxo de trabalho profissional focado em garantir a qualidade, a integridade do código e a entrega contínua.
 
-### 1. Feature Branch Workflow
+### 1. Workflow Escolhido: Github Flow
 
-Todo o desenvolvimento é feito em *branches* separadas (ex: `feature/atividade-qualidade`). A branch `main` é protegida e não pode receber commits diretos.
+O fluxo de trabalho adotado foi o **Github Flow**.
+
+**Por que essa escolha?**
+* **Simplicidade e Agilidade:** Como este projeto consiste em uma versão única de software sem necessidade de manter múltiplas versões legadas simultaneamente, o Github Flow elimina a complexidade de branches como `develop` ou `release`.
+* **Foco na `main` como Produção:** A branch `main` é a fonte da verdade e representa o estado de produção.
+* **Deploy Contínuo:** Assim que uma funcionalidade (feature) é finalizada e mesclada na `main`, a pipeline de CI/CD automaticamente constrói a imagem Docker e a publica, seguindo a premissa de implantações regulares.
 
 ### 2. Commits Semânticos e Assinados
 
@@ -73,8 +78,8 @@ Todo o desenvolvimento é feito em *branches* separadas (ex: `feature/atividade-
 
 Antes de qualquer Pull Request ser mesclado na `main`, ele é **obrigado** a passar por duas verificações automáticas de qualidade:
 
-* [cite_start]**`lint` (Análise Estática):** Este job executa o **ESLint** para garantir que todo o código segue os padrões de estilo e para encontrar "bad smells" ou possíveis bugs, conforme os conceitos de Análise Estática de Código[cite: 53, 63, 194].
-* [cite_start]**`test` (Testes e Cobertura):** Este job executa todos os testes de unidade e integração (`npm test`) e verifica a **cobertura de testes**[cite: 214].
+* **`lint` (Análise Estática):** Este job executa o **ESLint** para garantir que todo o código segue os padrões de estilo e para encontrar "bad smells" ou possíveis bugs, conforme os conceitos de Análise Estática de Código.
+* **`test` (Testes e Cobertura):** Este job executa todos os testes de unidade e integração (`npm test`) e verifica a **cobertura de testes**.
 
 ### 4. Proteção da Branch Principal
 
@@ -83,10 +88,15 @@ A branch `main` é protegida com as seguintes regras:
 * É obrigatório que os checks de status **`lint`** e **`test`** passem com sucesso.
 * A cobertura de testes deve se manter acima de **90%**.
 
-## 🐳 Docker Hub
+## 🐳 DevOps e Docker Hub
 
-A imagem oficial da aplicação está disponível publicamente.
+A imagem oficial da aplicação é construída e publicada automaticamente.
 
 [![Docker Image Version](https://img.shields.io/docker/v/guilhermeboni/api-filmes?sort=semver&label=DockerHub)](https://hub.docker.com/r/guilhermeboni/api-filmes)
 
 * **Link:** [hub.docker.com/r/guilhermeboni/api-filmes](https://hub.docker.com/r/guilhermeboni/api-filmes)
+
+### Como rodar via Docker
+
+```bash
+docker run -d -p 8080:8080 guilhermeboni/api-filmes:latest
